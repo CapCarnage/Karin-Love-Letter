@@ -135,33 +135,41 @@ Jonathan
     Your browser does not support the audio element.
   </audio>
 
-  <script>
-    let music = document.getElementById('bgMusic');
-    let musicVolume = music.volume; // Save the original volume
+<script>
+  let music = document.getElementById('bgMusic');
+  let musicVolume = music.volume; // Save the original volume
+  let video = document.getElementById('bgVideo'); // The video element
 
-    function openCard() {
-      document.getElementById('card').classList.add('open');
-      
-      // Lower the volume of the background music
-      music.volume = 0.1; // 0.1 is quieter, adjust this to your preference
+  function openCard() {
+    document.getElementById('card').classList.add('open');
+    
+    // Lower the volume of the background music
+    music.volume = 0.1; // 0.1 is quieter, adjust this to your preference
+
+    // Play the video
+    video.play().catch(error => {
+      console.error("Video failed to play:", error);
+    });
+  }
+
+  function closeCard() {
+    document.getElementById('card').classList.remove('open');
+    
+    // Restore the volume when the card closes
+    music.volume = musicVolume; // Reset to original volume
+
+    // Pause the video and reset to the start
+    video.pause();
+    video.currentTime = 0; // Reset video to the start
+  }
+
+  function toggleMusic() {
+    if (music.paused) {
+      music.play();
+      document.getElementById('musicToggle').textContent = 'Pause Music';
+    } else {
+      music.pause();
+      document.getElementById('musicToggle').textContent = 'Play Music';
     }
-
-    function closeCard() {
-      document.getElementById('card').classList.remove('open');
-      
-      // Restore the volume when the card closes
-      music.volume = musicVolume; // Reset to original volume
-    }
-
-    function toggleMusic() {
-      if (music.paused) {
-        music.play();
-        document.getElementById('musicToggle').textContent = 'Pause Music';
-      } else {
-        music.pause();
-        document.getElementById('musicToggle').textContent = 'Play Music';
-      }
-    }
-  </script>
-</body>
-
+  }
+</script>
