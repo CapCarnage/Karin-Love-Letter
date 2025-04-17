@@ -135,30 +135,33 @@ Jonathan
     Your browser does not support the audio element.
   </audio>
 
-  <iframe id="voiceMsg" width="0" height="0" src="" allow="autoplay" style="display:none;"></iframe>
-
   <script>
+    let music = document.getElementById('bgMusic');
+    let musicVolume = music.volume; // Save the original volume
+
     function openCard() {
       document.getElementById('card').classList.add('open');
+      
+      // Lower the volume of the background music
+      music.volume = 0.1; // 0.1 is quieter, adjust this to your preference
+    }
 
-      const music = document.getElementById('bgMusic');
-      music.volume = 0.2; // lower music volume
-
-      const voiceMsg = document.getElementById('voiceMsg');
-      voiceMsg.src = "https://www.youtube.com/embed/_TZw2HbQREk?autoplay=1";
+    function closeCard() {
+      document.getElementById('card').classList.remove('open');
+      
+      // Restore the volume when the card closes
+      music.volume = musicVolume; // Reset to original volume
     }
 
     function toggleMusic() {
-      const music = document.getElementById('bgMusic');
-      const btn = document.getElementById('musicToggle');
       if (music.paused) {
         music.play();
-        btn.textContent = 'Pause Music';
+        document.getElementById('musicToggle').textContent = 'Pause Music';
       } else {
         music.pause();
-        btn.textContent = 'Play Music';
+        document.getElementById('musicToggle').textContent = 'Play Music';
       }
     }
   </script>
 </body>
-</html>
+
